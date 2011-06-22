@@ -13,6 +13,7 @@ information.
 
 ### Example 
 ```ruby
-service ` Sanger::Barcode::Printing::Service.new(url) : label ` Sanger::Barcode::Printing::Label.new(:number `> "123", :prefix `> "NT", :study `> "my study") 
+service =  Sanger::Barcode::Printing::Service.new(url) 
+label = Sanger::Barcode::Printing::Label.new(:number => "123", :prefix => "NT", :study => "my study") 
 service.print_labels([label], "printer 1", Layout_for_1D_tube) 
 ```
