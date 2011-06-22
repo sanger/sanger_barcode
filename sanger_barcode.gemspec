@@ -11,6 +11,7 @@ Gem::Specification.new do |s|
   s.summary     = %q{Gem to manage and print Sanger Barcode}
   s.description = %q{(will) provide a Barcode class
   print barcode via SOAP sanger printing barcode service
+  Currently only work for ruby 1.8
 }
 
   s.rubyforge_project = "sanger_barcode"
