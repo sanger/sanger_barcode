@@ -9,10 +9,7 @@ Gem::Specification.new do |s|
   s.email       = ["mb14@sanger.ac.uk"]
   s.homepage    = ""
   s.summary     = %q{Gem to manage and print Sanger Barcode}
-  s.description = %q{(will) provide a Barcode class
-  print barcode via SOAP sanger printing barcode service
-  Currently only work for ruby 1.8
-}
+  s.description = %q{(will) provide a Barcode class print barcode via SOAP sanger printing barcode service Currently only work for ruby 1.8 }
 
   s.rubyforge_project = "sanger_barcode"
 
