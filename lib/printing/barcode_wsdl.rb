@@ -1,5 +1,3 @@
-require 'xsd/qname'
-
 # {urn:Barcode/Service}BarcodeLabelDTO
 class BarcodeLabelDTO
   attr_accessor :barcode
@@ -16,6 +14,18 @@ class BarcodeLabelDTO
     @prefix = prefix
     @project = project
     @suffix = suffix
+  end
+
+  def to_soap()
+    { "item" =>
+      { :barcode => barcode,
+        :desc => desc,
+        :name => name,
+        :prefix => prefix,
+        :project => project,
+        :suffix => suffix
+      }
+    }
   end
 end
 
@@ -38,4 +48,15 @@ end
 
 # {urn:Barcode/Service}ArrayOfBarcodeLabelDTO
 class ArrayOfBarcodeLabelDTO < ::Array
+  def to_soap()
+    { :labels => map {|e| e.to_soap },
+     :attributes! => {
+      :labels => {
+        "n2:arrayType" =>  "n1:BarcodeLabelDTO[#{size}]",
+        "xmlns:n2" => "http://schemas.xmlsoap.org/soap/encoding/",
+          "xsi:type"=>"n2:Array"
+        }
+      }
+    }
+  end
 end

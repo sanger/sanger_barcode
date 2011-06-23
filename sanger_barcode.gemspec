@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
   s.description = %q{(will) provide a Barcode class
   print barcode via SOAP sanger printing barcode service
   Currently only work for ruby 1.8
+
 }
 
   s.rubyforge_project = "sanger_barcode"
@@ -20,4 +21,6 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
+
+  s.add_dependency('savon')
 end
