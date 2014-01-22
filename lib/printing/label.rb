@@ -1,6 +1,6 @@
 module Sanger::Barcode::Printing
 class Label
-  attr_accessor :number, :study, :suffix, :output_plate_purpose, :prefix
+  attr_accessor :number, :study, :suffix, :output_plate_purpose, :prefix, :output_plate_role
 
   def initialize(options = {})
     unless options.nil?
@@ -9,14 +9,15 @@ class Label
       @suffix = options[:suffix]
       @prefix= options[:prefix]
       if !options[:batch].nil? && !options[:batch].output_plate_purpose.nil?
-        @output_plate_purpose = options[:batch].output_plate_purpose.name  
+        @output_plate_purpose = options[:batch].output_plate_purpose.name
+        @output_plate_role    = options[:batch].output_plate_role
       end
     end
   end
-  
+
   def printable(printer_type, options)
     default_prefix = options[:prefix]
-    barcode_type   = options[:type] || "short" 
+    barcode_type   = options[:type] || "short"
     study_name     = options[:study_name]
     user_login    = options[:user_login]
 
@@ -26,10 +27,13 @@ class Label
     description = self.barcode_description
     text        = self.barcode_text(default_prefix)
 
-    #TODO[mb14] deduce barcode_type form printer_type
-    if barcode_type == "long"
+    case barcode_type
+    when "long"
       text = "#{study_name}" if study_name
       description = "#{user_login} #{output_plate_purpose} #{barcode_name}" if user_login
+    when "cherrypick"
+      text = "#{study_name}" if study_name
+      description = "#{output_plate_role} #{output_plate_purpose} #{barcode_name}".strip
     end
     scope          = description
 
@@ -54,7 +58,7 @@ class Label
 
   def barcode_prefix(default_prefix)
     #todo move upstream
-    prefix || begin 
+    prefix || begin
       p = study[0..1]
       p == "LE" ? p : default_prefix
     end
