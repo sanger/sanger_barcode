@@ -5,8 +5,8 @@ require "sanger_barcode/version"
 Gem::Specification.new do |s|
   s.name        = "sanger_barcode"
   s.version     = SangerBarcode::VERSION
-  s.authors     = ["Maxime Bourget"]
-  s.email       = ["mb14@sanger.ac.uk"]
+  s.authors     = ["Maxime Bourget","James Glover"]
+  s.email       = ["mb14@sanger.ac.uk","jg16@sanger.ac.uk"]
   s.homepage    = ""
   s.summary     = %q{Gem to manage and print Sanger Barcode}
   s.description = %q{(will) provide a Barcode class
