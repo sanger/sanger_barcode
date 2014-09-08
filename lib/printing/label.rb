@@ -12,6 +12,8 @@ class Label
         @output_plate_purpose = options[:batch].output_plate_purpose.name
         @output_plate_role    = options[:batch].output_plate_role
       end
+      @label_name = options[:label_name]
+      @label_description = options[:label_description]
     end
   end
 
@@ -20,6 +22,10 @@ class Label
     barcode_type   = options[:type] || "short"
     study_name     = options[:study_name]
     user_login    = options[:user_login]
+      
+    # Contents for 1st and 2nd line in barcode label (Custom labels)
+    label_name = options[:label_name] || @label_name
+    label_description = options[:label_description] || @label_description
 
     number      = self.number.to_i
     prefix      = self.barcode_prefix(default_prefix)
@@ -34,6 +40,9 @@ class Label
     when "cherrypick"
       text = "#{study_name}" if study_name
       description = "#{output_plate_role} #{output_plate_purpose} #{barcode_name}".strip
+    when "custom-labels"      
+      text = "#{label_name}" || "#{prefix}#{number}#{suffix}" || text
+      description = "#{label_description}" || "#{output_plate_purpose}" || description
     end
     scope          = description
 
