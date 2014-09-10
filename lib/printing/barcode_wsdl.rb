@@ -17,7 +17,6 @@ class BarcodeLabelDTO
   end
 
   def to_soap()
-    { "item" =>
       { :barcode => barcode,
         :desc => desc,
         :name => name,
@@ -25,7 +24,6 @@ class BarcodeLabelDTO
         :project => project,
         :suffix => suffix
       }
-    }
   end
 end
 

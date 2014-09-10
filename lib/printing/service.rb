@@ -34,7 +34,7 @@ module Sanger::Barcode
               :type => printer_type,
               :headerLabel =>1,
               :footerLabel => 1 ,
-              :labels => printables.map {|e| e.to_soap },
+              :labels => { :item => printables.map {|e| e.to_soap } }  ,
               :attributes! => {
                 :labels => {
                   "n2:arrayType" =>  "n1:BarcodeLabelDTO[#{printables.size}]",
