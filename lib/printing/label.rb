@@ -43,7 +43,7 @@ class Label
       description = "#{output_plate_role} #{output_plate_purpose} #{barcode_name}".strip
     when "custom-labels"
       text = label_name if label_name
-      description = label_description if label_decription
+      description = label_description if label_description
     end
     scope          = description
 
