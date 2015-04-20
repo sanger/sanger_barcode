@@ -12,14 +12,22 @@ class Label
         @output_plate_purpose = options[:batch].output_plate_purpose.name
         @output_plate_role    = options[:batch].output_plate_role
       end
+      @label_name = options[:label_name]
+      @label_description = options[:label_description]
+      @barcode_type   = options[:type]
     end
   end
 
   def printable(printer_type, options)
-    default_prefix = options[:prefix]
-    barcode_type   = options[:type] || "short"
-    study_name     = options[:study_name]
-    user_login    = options[:user_login]
+    # Prioritizing of specific config (self. attributes) over global config (options)
+    default_prefix = [@prefix, options[:prefix]].detect(&:present?)
+    barcode_type   = [@barcode_type || options[:type] || "short"].detect(&:present?)
+    study_name     = [@study_name, options[:study_name]].detect(&:present?)
+    user_login    = [@user_login, options[:user_login]].detect(&:present?)
+
+    # Contents for 1st and 2nd line in barcode label (Custom labels)
+    label_name = [@label_name, options[:label_name]].detect(&:present?)
+    label_description = [@label_description, options[:label_description]].detect(&:present?)
 
     number      = self.number.to_i
     prefix      = self.barcode_prefix(default_prefix)
@@ -34,6 +42,9 @@ class Label
     when "cherrypick"
       text = "#{study_name}" if study_name
       description = "#{output_plate_role} #{output_plate_purpose} #{barcode_name}".strip
+    when "custom-labels"
+      text = label_name if label_name
+      description = label_description if label_description
     end
     scope          = description
 
