@@ -19,11 +19,10 @@ class Label
   end
 
   def printable(printer_type, options)
-    # Prioritizing of specific config (self. attributes) over global config (options)
-    default_prefix = [@prefix, options[:prefix]].detect(&:present?)
-    barcode_type   = [@barcode_type || options[:type] || "short"].detect(&:present?)
-    study_name     = [@study_name, options[:study_name]].detect(&:present?)
-    user_login    = [@user_login, options[:user_login]].detect(&:present?)
+    default_prefix = options[:prefix]
+    barcode_type   = options[:type] || "short"
+    study_name     = options[:study_name]
+    user_login    = options[:user_login]
 
     # Contents for 1st and 2nd line in barcode label (Custom labels)
     label_name = [@label_name, options[:label_name]].detect(&:present?)
