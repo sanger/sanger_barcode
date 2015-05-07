@@ -20,13 +20,13 @@ class Label
 
   def printable(printer_type, options)
     default_prefix = options[:prefix]
-    barcode_type   = options[:type] || "short"
+    barcode_type   = options[:type] || @barcode_type || "short"
     study_name     = options[:study_name]
     user_login    = options[:user_login]
 
     # Contents for 1st and 2nd line in barcode label (Custom labels)
-    label_name = [@label_name, options[:label_name]].detect(&:present?)
-    label_description = [@label_description, options[:label_description]].detect(&:present?)
+    label_name = [options[:label_name], @label_name].detect(&:present?)
+    label_description = [options[:label_description], @label_description].detect(&:present?)
 
     number      = self.number.to_i
     prefix      = self.barcode_prefix(default_prefix)
