@@ -18,19 +18,12 @@ class Label
     end
   end
 
-  def get_study_string_content
-    params = @study.split(/ /)
-    barcode = params.pop.strip
-    plate_purpose = params.join(" ").strip
-    return { :barcode => barcode, :plate_purpose => plate_purpose }
-  end
-  
   def printable(printer_type, options)
     default_prefix = options[:prefix]
     barcode_type   = options[:type] || @barcode_type || "short"
     study_name     = options[:study_name]
     user_login    = options[:user_login]
-      
+
     # Contents for 1st and 2nd line in barcode label (Custom labels)
     label_name = [options[:label_name], @label_name].detect(&:present?)
     label_description = [options[:label_description], @label_description].detect(&:present?)
@@ -40,7 +33,7 @@ class Label
     suffix      = self.suffix
     description = self.barcode_description
     text        = self.barcode_text(default_prefix)
-    
+
     case barcode_type
     when "long"
       text = "#{study_name}" if study_name
@@ -49,9 +42,8 @@ class Label
       text = "#{study_name}" if study_name
       description = "#{output_plate_role} #{output_plate_purpose} #{barcode_name}".strip
     when "custom-labels"
-      study_content = get_study_string_content
-      text = ["#{label_name}", "#{prefix}#{study_content[:barcode]}#{suffix}", text].detect(&:present?)
-      description = ["#{label_description}", "#{study_content[:plate_purpose]}", description].detect(&:present?)
+      text = label_name if label_name
+      description = label_description if label_description
     end
     scope          = description
 
