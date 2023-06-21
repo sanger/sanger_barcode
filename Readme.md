@@ -1,4 +1,7 @@
 # Sanger Barcode
+
+This repo is now archived as it is not used anymore.
+
 This Gem provides different classes to deal with barcode and print them.
 
 ## Barcode
